@@ -1,0 +1,4 @@
+# ignore venv directory
+venv/
+test-code.py
+.idea

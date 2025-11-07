@@ -13,9 +13,10 @@ verbose = args.verbose
 
 def open_file(file_name, word):
     w = 0
+    word = word.lower()
     with open(file_name, 'r') as file:
         for line in file:
-            line = line.strip()
+            line = line.strip().lower()
             if line == word:
                 w += 1
     return w

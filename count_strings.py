@@ -4,7 +4,7 @@ argparser = argparse.ArgumentParser()
 
 argparser.add_argument('file', help='designated file to search in')
 argparser.add_argument('word', help='search for word in file',type=str)
-argparser.add_argument('-s', '--case-sensitive', help='enables case sensitivity when searching', action='store_false')
+argparser.add_argument('-s', '--case-sensitive', help='checks case sensitivity when searching', action='store_false')
 argparser.add_argument('-v', '--verbose', action="store_true")
 args = argparser.parse_args()
 

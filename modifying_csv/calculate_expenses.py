@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('sample_directory/expenses.csv')
+df = pd.read_csv('expenses.csv')
 
 # pd.set_option('display.max_columns', 100)
 # pd.set_option('display.max_rows', 100)

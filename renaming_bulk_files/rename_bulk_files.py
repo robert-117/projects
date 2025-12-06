@@ -1,7 +1,6 @@
 import os
 import datetime
 import argparse
-from os import times_result
 
 ## build argparser to check file extensions
 ## build out argparser to change between txt and json file extension

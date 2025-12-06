@@ -1,4 +1,3 @@
-
 import argparse
 parser = argparse.ArgumentParser(description="calculated X to the power  of Y")
 group = parser.add_mutually_exclusive_group()

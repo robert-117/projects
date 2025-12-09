@@ -1,5 +1,3 @@
-from email.contentmanager import maintype
-
 import requests
 import argparse
 

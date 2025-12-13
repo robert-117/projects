@@ -1,14 +1,4 @@
 import subprocess
-import os
-from subprocess import DEVNULL
-from sys import stdout
-
-
-# print(os.getcwd())
-# res = subprocess.run(['wsl', '-d', 'Ubuntu-20.04', 'ls', '-l', '/home/rcarpenter/code_proj/projects/interfacing_websites'], \
-#                check=True, text=True, capture_output=True)
-# print(res.stdout)
-# print(res.stderr)
 
 def clean_hosts(host_file='test-hosts'):
     with open(host_file, 'r') as f:
@@ -21,28 +11,19 @@ def clean_hosts(host_file='test-hosts'):
                 host_list.append(hostname)
         return host_list
 
-for full_addr in clean_hosts():
-    addr = full_addr[0]
-    hostname = full_addr[1]
-    p = subprocess.Popen(f'ping {addr}', shell=False, stdout=DEVNULL)
-    p.wait()
-    if p.poll():
-        print(addr+" is down")
-        print(p.stdout)
-    # TODO need to account for destination unreachable
-    # elif 'Destination host unreachable.' in p.stdout.decode('utf-8'):
-    #     print (addr+" is unreachable")
-    else:
-        print(addr+" is up")
-        print(p.stdout)
+def ping_host():
+    for full_addr in clean_hosts():
+        addr = full_addr[0]
+        hostname = full_addr[1]
+        p = subprocess.Popen(['ping', addr], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        stdout, stderr = p.communicate()
+        output = stdout + stderr
 
-def ping_host(host):
-    ping_result = subprocess.check_output(['ping', '-c', '1', '-W', host])
-    print(ping_result)
+        if 'Destination host unreachable.' in output:
+            print(f'{hostname}: {addr} is unreachable')
+        elif p.returncode != 0:
+            print(f'{hostname}: {addr} is down')
+        else:
+            print(f'{hostname}: {addr} is up')
 
-
-
-
-
-
-
+ping_host()

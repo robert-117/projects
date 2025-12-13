@@ -1,0 +1,26 @@
+# Random hosts file
+# Uses only non-routable / reserved IP addresses
+
+8.8.8.8         google.com
+127.0.0.1       localhost
+::1             localhost
+
+192.168.1.10    webserver.local
+192.168.1.11    dbserver.local
+192.168.1.12    cache.local
+
+10.0.0.5        api.internal
+10.0.0.6        auth.internal
+10.0.0.7        metrics.internal
+
+172.16.0.20     staging.app
+172.16.0.21     staging.db
+
+192.0.2.15      example.com
+192.0.2.16      www.example.com
+198.51.100.42   mail.example.net
+
+203.0.113.91    randomhost1.net
+203.0.113.92    randomhost2.org
+198.51.100.77   randomhost3.io
+192.0.2.64      randomhost4.dev

@@ -1,0 +1,13 @@
+2026-01-05 14:00:01 INFO kernel: boot sequence initiated
+2026-01-05 14:00:05 INFO systemd: started service api
+2026-01-05 14:00:18 INFO sshd: accepted publickey for alice from 10.0.0.12
+2026-01-05 14:00:25 WARN systemd: api service memory high rss_mb=512
+2026-01-05 14:00:26 ERROR systemd: api service restart failed exit_code=1
+2026-01-05 14:00:27 INFO systemd: scheduled restart for api in 5s
+2026-01-05 14:00:33 INFO systemd: started service api
+2026-01-05 14:01:04 WARN sshd: failed password for bob from 10.0.0.50
+2026-01-05 14:01:07 WARN sshd: failed password for bob from 10.0.0.50
+2026-01-05 14:01:09 ERROR sshd: too many authentication failures for bob from 10.0.0.50
+2026-01-05 14:02:10 INFO cron: job=cleanup-temp status=ok duration_ms=240
+2026-01-05 14:02:58 ERROR kernel: disk io error dev=sda sector=991827
+2026-01-05 14:03:01 WARN systemd: degraded state entered

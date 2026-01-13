@@ -14,7 +14,7 @@ output timeline.txt with
 - first/last timestamp
 - a short list of notable events (WARN/ERROR, sorted by time)
 '''
-import json, argparse, datetime, re
+import json, argparse, datetime, re, time
 from collections import Counter
 
 dt = datetime
@@ -47,16 +47,32 @@ def main():
        print(format_detector())
 
 def syslog_parser():
-    pass
-
-def json_parser():
+    print(f"\n--- Summary of {args.file} ---")
     with open(args.file) as f:
         line_count = 0
+        ts_list = []
+        for line in f:
+            line_count +=1
+            ts_string = re.search(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", line).group()
+            ts_list.append(ts_string)
+            ts_dt = time.strptime(re.search(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", line).group(), "%Y-%m-%d %H:%M:%S") # structure as timestamp data type
+            print(ts_string)
+
+        print(f"\n- Number of lines found in file: {line_count} lines")
+        print(f"\n- First timestamp found at {ts_list[0]}")
+        print(f"- Last timestamp found at  {ts_list[-1]}")
+
+def json_parser():
+    print(f"\n--- Summary of {args.file} ---")
+    with open(args.file) as f:
+        line_count = 0
+        data_list = []
         level_list = []
         msg_list = []
         ts_list = []
         for line in f:
             data = json.loads(line)
+            data_list.append(data)
             line_count += 1
             level_list.append(data["level"])
             msg_list.append(data["msg"])
@@ -67,26 +83,32 @@ def json_parser():
         level_count = Counter(level_list)
         ts_list.sort()
 
-        print(f"\nNumber of lines found in file: {line_count} lines")
-        print(f"\nFound the following number of response codes:")
+        print(f"\n- Number of lines found in file: {line_count} lines")
+        print(f"\n- Found the following number of response codes:")
         for k, v in level_count.items():
             print(f"{k}: {v}")
-        print(f"\nFound top 5 most common messges: ")
+        print(f"\n- Found top 5 most common messages:")
         for k, num in Counter(msg_list).most_common(5):
             print(f"{num}: {k}")
-        print(f"\nFirst timestamp found at {ts_list[0]}\nLast timestamp found at  {ts_list[-1]}")
+        print(f"\n- First timestamp found at {ts_list[0]}")
+        print(f"- Last timestamp found at  {ts_list[-1]}")
 
-        return data
+        return data_list
 
-print(type(json_parser()))
 
-def json_summary(data):
-    pass
-    # counter = 0
-    # level_list = []
-    # for line in data:
-    #     counter += 1
-    #     level_list.append(data["level"])
+# json_data = json_parser()
+
+def json_summary(json_data):
+    level_list = []
+    for line in json_data:
+        data = json.loads(line)
+        level_list.append(data["level"])
+    msg_list = []
+    ts_list = []
+    print(counter)
+
+
+# json_summary(json_data)
 
 if __name__ == "__main__":
     main()

@@ -51,14 +51,34 @@ def syslog_parser():
     with open(args.file) as f:
         line_count = 0
         ts_list = []
+        level_list = []
+        msg_list = []
         for line in f:
             line_count +=1
             ts_string = re.search(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", line).group()
             ts_list.append(ts_string)
-            ts_dt = time.strptime(re.search(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", line).group(), "%Y-%m-%d %H:%M:%S") # structure as timestamp data type
-            print(ts_string)
+            # ts_dt = time.strptime(re.search(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", line).group(), "%Y-%m-%d %H:%M:%S") # structure as timestamp data type
+            level = re.search(r"INFO|WARN|ERROR", line).group()
+            level_list.append(level)
+            msg = re.search(r"(?:(?<=INFO )|(?<=WARN )|(?<=ERROR )).*", line).group()
+            msg_list.append(msg)
+
+        for x in msg_list:
+            print(x)
+        level_count = Counter(level_list)
+        # if args.print is True:
+        #     for line in f:
+        #         print(line)
 
         print(f"\n- Number of lines found in file: {line_count} lines")
+        print(f"\n- Found the following number of response codes:")
+        for k, v in level_count.items():
+            print(f"{k}: {v}")
+        print(f"\n- Found top 5 most common messages:")
+        for k, num in Counter(msg_list).most_common(5):
+            print(f"{num}: {k}")
+        print(f"\n- Found top 5 most common messages:")
+
         print(f"\n- First timestamp found at {ts_list[0]}")
         print(f"- Last timestamp found at  {ts_list[-1]}")
 
